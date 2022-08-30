@@ -1,0 +1,10 @@
+server:
+  port: 8188
+  servlet:
+    context-path: /platform
+spring:
+  profiles:
+    active: dev
+  application:
+    name: platform
+

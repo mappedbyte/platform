@@ -1,0 +1,25 @@
+package com.francis.platform.util;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.francis.platform.common.response.CommonResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+public class ResponseUtil {
+
+    private ResponseUtil(){}
+    public static void out(HttpServletResponse response, CommonResponse commonResponse) {
+        ObjectMapper mapper = new ObjectMapper();
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        try {
+            mapper.writeValue(response.getWriter(), commonResponse);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
