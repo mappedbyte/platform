@@ -1,8 +1,11 @@
 package com.francis.platform.config.web.security.service;
 
-import com.alibaba.fastjson.JSON;
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.francis.platform.common.constans.AppConstants;
+import com.francis.platform.common.constans.AppProperties;
 import com.francis.platform.config.web.security.entity.LoginUser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -25,6 +28,12 @@ import java.util.UUID;
 @Service
 public class JwtServiceImpl  implements JwtService{
 
+    private final AppProperties appProperties;
+
+    public JwtServiceImpl(AppProperties appProperties) {
+        this.appProperties = appProperties;
+    }
+
     /**
      * 根据本地存储的私钥获取到 PrivateKey对象
      * @return
@@ -42,21 +51,19 @@ public class JwtServiceImpl  implements JwtService{
 
     @Override
     public String generateToken(LoginUser user) throws Exception {
-      return   generateToken(user, 1);
+      return   generateToken(user, appProperties.getJwt().getExpire());
     }
 
     @Override
     public String generateToken(LoginUser user, int expire) throws Exception {
-        ZonedDateTime zdt = LocalDate.now().plus(expire, ChronoUnit.DAYS)
-                .atStartOfDay(ZoneId.systemDefault());
-        Date expireDate = Date.from(zdt.toInstant());
+        DateTime dateTime = DateUtil.offset(new Date(), DateField.MINUTE, expire * 2);
         return Jwts.builder()
 //              payload 部分
                 .claim(AppConstants.JWT_USER_INFO_KEY, JSONObject.toJSONString(user))
 //              jwt id
                 .setId(UUID.randomUUID().toString())
 //              jwt 过期时间
-                .setExpiration(expireDate)
+                .setExpiration(dateTime)
 //              签名
                 .signWith(getPrivateKey(), SignatureAlgorithm.RS256)
                 .compact();

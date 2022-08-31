@@ -28,5 +28,9 @@ mybatis-plus:
   config-locations: classpath:xml/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+app:
+  jwt:
+    expire: 1  #minutes
+
 
 

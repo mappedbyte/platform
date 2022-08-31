@@ -1,90 +1,179 @@
 package com.francis.platform.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Component
 public class RedisUtils {
 
-    private final RedisTemplate redisTemplate;
 
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
-    public RedisUtils(RedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
+    private static RedisUtils redisUtils;
+
 
     /**
-     * 读取缓存
+     * 初始化
+     */
+    @PostConstruct
+    public void init() {
+        redisUtils = this;
+        redisUtils.redisTemplate = this.redisTemplate;
+    }
+
+
+
+    public static void increment(String key, long inc) {
+        redisUtils.redisTemplate.opsForValue().increment(key, inc);
+    }
+    /**
+     * 查询key，支持模糊查询
      *
      * @param key
-     * @return
      */
-    public Object get( String key) {
-        return redisTemplate.opsForValue().get(key);
+    public static Set<String> keys(String key) {
+        return redisUtils.redisTemplate.keys(key);
     }
 
     /**
-     * 写入缓存
+     * 获取值
+     *
+     * @param key
      */
-    public boolean set(final String key, String value) {
-        boolean result = false;
-        try {
-            redisTemplate.opsForValue().set(key, value);
-            result = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+    public static Object get(String key) {
+        return redisUtils.redisTemplate.opsForValue().get(key);
     }
 
     /**
-     * 写入缓存,并设置过期时间
+     * 设置值
      *
      * @param key
      * @param value
-     * @param timeout
-     * @param unit
+     */
+    public static void set(String key, String value) {
+        redisUtils.redisTemplate.opsForValue().set(key, value);
+    }
+
+    /**
+     * 设置值，并设置过期时间
+     *
+     * @param key
+     * @param value
+     * @param expire 过期时间，单位秒
+     */
+    public static void set(String key, String value, Integer expire) {
+        redisUtils.redisTemplate.opsForValue().set(key, value, expire, TimeUnit.SECONDS);
+    }
+
+    /**
+     * 删出key
+     *
+     * @param key
+     */
+    public static void delete(String key) {
+        redisUtils.redisTemplate.opsForValue().getOperations().delete(key);
+    }
+
+    /**
+     * 设置对象
+     *
+     * @param key     key
+     * @param hashKey hashKey
+     * @param object  对象
+     */
+    public static void hset(String key, String hashKey, Object object) {
+        redisUtils.redisTemplate.opsForHash().put(key, hashKey, object);
+    }
+
+    /**
+     * 设置对象
+     *
+     * @param key     key
+     * @param hashKey hashKey
+     * @param object  对象
+     * @param expire  过期时间，单位秒
+     */
+    public static void hset(String key, String hashKey, Object object, long expire) {
+        redisUtils.redisTemplate.opsForHash().put(key, hashKey, object);
+        redisUtils.redisTemplate.expire(key, expire, TimeUnit.SECONDS);
+    }
+
+    /**
+     * 设置HashMap
+     *
+     * @param key key
+     * @param map map值
+     */
+    public static void hset(String key, HashMap<String, Object> map) {
+        redisUtils.redisTemplate.opsForHash().putAll(key, map);
+    }
+
+    /**
+     * key不存在时设置值
+     *
+     * @param key
+     * @param hashKey
+     * @param object
+     */
+    public static void hsetAbsent(String key, String hashKey, Object object) {
+        redisUtils.redisTemplate.opsForHash().putIfAbsent(key, hashKey, object);
+    }
+
+    /**
+     * 获取Hash值
+     *
+     * @param key
+     * @param hashKey
      * @return
      */
-    public boolean set(final String key, String value, long timeout, TimeUnit unit) {
-        boolean result = false;
-        try {
-            redisTemplate.opsForValue().set(key, value, timeout, unit);
-            result = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+    public static Object hget(String key, String hashKey) {
+        return redisUtils.redisTemplate.opsForHash().get(key, hashKey);
     }
 
     /**
-     * 更新缓存
+     * 获取key的所有值
+     *
+     * @param key
+     * @return
      */
-    public boolean getAndSet(final String key, String value) {
-        boolean result = false;
-        try {
-            redisTemplate.opsForValue().getAndSet(key, value);
-            result = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+    public static Object hget(String key) {
+        return redisUtils.redisTemplate.opsForHash().entries(key);
     }
 
     /**
-     * 删除缓存
+     * 删除key的所有值
+     *
+     * @param key
      */
-    public boolean delete(final String key) {
-        boolean result = false;
-        try {
-            redisTemplate.delete(key);
-            result = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+    public static void deleteKey(String key) {
+        redisUtils.redisTemplate.opsForHash().getOperations().delete(key);
+    }
+
+    /**
+     * 判断key下是否有值
+     *
+     * @param key
+     */
+    public static Boolean hasKey(String key) {
+        return redisUtils.redisTemplate.opsForHash().getOperations().hasKey(key);
+    }
+
+    /**
+     * 判断key和hasKey下是否有值
+     *
+     * @param key
+     * @param hasKey
+     */
+    public static Boolean hasKey(String key, String hasKey) {
+        return redisUtils.redisTemplate.opsForHash().hasKey(key, hasKey);
     }
 
 

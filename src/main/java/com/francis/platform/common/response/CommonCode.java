@@ -13,6 +13,8 @@ public enum CommonCode implements ResultCode {
     USERNAME_AND_PASSWORD_ERROR(false, 401, "用户名或密码不正确！"),
     PERMISSION_DENIED(false, 402, "权限不足！"),
 
+    LOGIN_ELSE_WHERE(false, 403, "您的账号在其他地方登录！"),
+
     ;
 
 

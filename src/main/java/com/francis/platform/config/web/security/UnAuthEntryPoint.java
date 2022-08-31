@@ -1,5 +1,7 @@
 package com.francis.platform.config.web.security;
 
+import com.francis.platform.common.exception.CustomException;
+import com.francis.platform.common.exception.CustomSecurityException;
 import com.francis.platform.common.response.CommonCode;
 import com.francis.platform.common.response.CommonResponse;
 import com.francis.platform.util.ResponseUtil;
@@ -18,6 +20,10 @@ public class UnAuthEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        if (authException instanceof CustomSecurityException) {
+            System.out.println("exxx");
+        }
+
         ResponseUtil.out(response, CommonResponse.error(CommonCode.UNAUTHORIZED_ERROR));
     }
 }
