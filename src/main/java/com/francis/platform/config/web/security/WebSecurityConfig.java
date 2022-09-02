@@ -69,7 +69,7 @@ public class WebSecurityConfig   {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/platform/login")
-                .permitAll().antMatchers("/app/test").hasAnyRole("ROLE")
+                .permitAll().antMatchers("/app/test").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().userDetailsService(userDetailsService);
