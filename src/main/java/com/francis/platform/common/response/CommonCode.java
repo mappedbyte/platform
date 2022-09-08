@@ -15,7 +15,8 @@ public enum CommonCode implements ResultCode {
 
     LOGIN_ELSE_WHERE(false, 403, "您的账号在其他地方登录！"),
 
-    ;
+    CAPTCHA_ERROR(false, 404,"验证码不正确！" ),
+    CAPTCHA_EXPIRE(false, 405,"验证码过期,请重新获取！" );
 
 
     boolean success;

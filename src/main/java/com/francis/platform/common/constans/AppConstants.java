@@ -12,4 +12,8 @@ public class AppConstants {
 
     public static String BLACKLIST = "blackList";
 
+    public static String RESPONSE_CAPTCHA_KEY = "captcha";
+    public static String UUID = "uuid";
+    public static String REDIS_CAPTCHA_KEY = "captcha:";
+
 }

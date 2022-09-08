@@ -15,6 +15,11 @@ spring:
       connection-test-query: select now()
 
 
+
+
+
+
+
   redis:
     database: 0
     host: localhost
@@ -24,13 +29,24 @@ spring:
         enabled: true
         min-idle: 1
         max-idle: 8
+  data:
+    mongodb:
+      authentication-database: admin
+      host: 192.168.10.73
+      port: 27017
+      password: admin@123.
+      username: root
+      database: platform
+
+
+
 mybatis-plus:
   config-locations: classpath:xml/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 app:
   jwt:
-    expire: 1  #minutes
+    expire: 30  #minutes
 
 
 

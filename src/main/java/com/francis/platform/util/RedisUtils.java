@@ -173,7 +173,13 @@ public class RedisUtils {
      * @param hasKey
      */
     public static Boolean hasKey(String key, String hasKey) {
-        return redisUtils.redisTemplate.opsForHash().hasKey(key, hasKey);
+        Boolean hasContainsKey = false;
+        try{
+            hasContainsKey = redisUtils.redisTemplate.opsForHash().hasKey(key, hasKey);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return hasContainsKey;
     }
 
 

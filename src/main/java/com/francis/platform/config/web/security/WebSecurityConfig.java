@@ -1,5 +1,6 @@
 package com.francis.platform.config.web.security;
 
+import com.francis.platform.config.web.security.filter.CaptchaFilter;
 import com.francis.platform.config.web.security.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -23,13 +25,24 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig   {
 
 
+
+
+
+
     private final UserDetailsService userDetailsService;
     private final UserLoginSuccessHandler userLoginSuccessHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    public WebSecurityConfig(UserDetailsService userDetailsService, UserLoginSuccessHandler userLoginSuccessHandler, JwtAuthenticationFilter jwtAuthenticationFilter) {
+    private final CaptchaFilter captchaFilter;
+
+
+    private final AuthenticationEntryPoint authenticationEntryPoint;
+    public WebSecurityConfig(UserDetailsService userDetailsService, UserLoginSuccessHandler userLoginSuccessHandler, JwtAuthenticationFilter jwtAuthenticationFilter, CaptchaFilter captchaFilter, AuthenticationEntryPoint authenticationEntryPoint) {
         this.userDetailsService = userDetailsService;
         this.userLoginSuccessHandler = userLoginSuccessHandler;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.captchaFilter = captchaFilter;
+
+        this.authenticationEntryPoint = authenticationEntryPoint;
     }
 
     @Bean
@@ -45,9 +58,16 @@ public class WebSecurityConfig   {
 
 
 
+
+
+
+
+
+
     @Bean
     public WebSecurityCustomizer ignoringCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/platform");
+        return (web) -> web.ignoring()
+                .antMatchers("/platform");
     }
 
     @Bean
@@ -57,8 +77,9 @@ public class WebSecurityConfig   {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(captchaFilter ,JwtAuthenticationFilter.class)
                 .exceptionHandling()
-                .authenticationEntryPoint(new UnAuthEntryPoint())
+                .authenticationEntryPoint(authenticationEntryPoint)
                 .accessDeniedHandler(new UnAuthExceptionHandler())
                 .and()
                 .formLogin()
@@ -69,7 +90,10 @@ public class WebSecurityConfig   {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/platform/login")
-                .permitAll().antMatchers("/app/test").permitAll()
+                .permitAll()
+                .antMatchers("/app/test")
+                .permitAll()
+                .antMatchers("/v1/captcha/obtain").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().userDetailsService(userDetailsService);

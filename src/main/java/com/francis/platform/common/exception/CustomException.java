@@ -11,6 +11,7 @@ public class CustomException extends RuntimeException{
     ResultCode resultCode;
 
     public CustomException(ResultCode resultCode){
+        super(resultCode.message());
         this.resultCode=resultCode;
     }
 
