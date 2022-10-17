@@ -1,14 +1,18 @@
 package com.francis.platform.common.captcha;
 
+import cn.hutool.core.codec.Base64;
 import com.francis.platform.common.constans.AppConstants;
 import com.francis.platform.common.exception.ExceptionCatch;
 import com.francis.platform.common.response.CommonCode;
+import com.francis.platform.common.response.CommonResponse;
 import com.francis.platform.util.RedisUtils;
+import com.francis.platform.util.ResponseUtil;
 import com.wf.captcha.ArithmeticCaptcha;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -21,7 +25,7 @@ public class ImageCodeGenerator extends AbstractValidateCodeProcessor {
 
     public static ImageCodeGenerator me = new ImageCodeGenerator();
 
-    private ImageCodeGenerator(){
+    private ImageCodeGenerator() {
 
     }
 
@@ -58,8 +62,10 @@ public class ImageCodeGenerator extends AbstractValidateCodeProcessor {
         // 几位数运算，默认是两位
         captcha.setLen(2);
         String result = captcha.text();// 获取运算的结果：5
-        try {
-            captcha.out(response.getOutputStream());
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+            captcha.out(out);
+            String base64Pic = Base64.encode(out.toByteArray());
+            ResponseUtil.out(httpServletResponse, CommonResponse.Ok(base64Pic));
         } catch (IOException e) {
             e.printStackTrace();
         }

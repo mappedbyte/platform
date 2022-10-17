@@ -1,8 +1,10 @@
 package com.francis.platform.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.francis.platform.entity.SiteArea;
 import com.francis.platform.entity.vo.LocationPoint;
 import com.francis.platform.entity.vo.SiteAreaVo;
+import com.francis.platform.entity.vo.UwbBody;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -10,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -49,6 +52,24 @@ public class SiteAreaController {
                 .stream().map(SiteArea::toSiteAreaVo)
                 .collect(Collectors.toList());
     }
+
+
+
+
+/*
+    @PostMapping("/push")
+    public void  push(@RequestBody Map locationMap){
+        String s = JSONObject.toJSONString(locationMap);
+        System.out.println(s);
+    }
+*/
+
+
+    @PostMapping("/push")
+    public void  push(@RequestBody UwbBody locationMap){
+        System.out.println(locationMap);
+    }
+
 
 
 }

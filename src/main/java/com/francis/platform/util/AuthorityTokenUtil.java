@@ -9,6 +9,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import sun.misc.BASE64Decoder;
 
 import java.security.KeyFactory;
@@ -23,6 +24,16 @@ import java.util.Calendar;
 public class AuthorityTokenUtil {
 
 
+    public static Long getUserId() {
+        try {
+            LoginUser loginUser = parseUserInfoFromToken((String) SecurityContextHolder.getContext().getAuthentication().getCredentials());
+            return loginUser.getUserId();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     /**
      * 从 JWT Token 解析LoginUserInfo对象
@@ -35,7 +46,6 @@ public class AuthorityTokenUtil {
         if (null == token) {
             return null;
         }
-
         Jws<Claims> claimsJws = parseToken(token, getPublicKey());
         Claims body = claimsJws.getBody();
         if (body.getExpiration().before(Calendar.getInstance().getTime())) {
@@ -45,9 +55,6 @@ public class AuthorityTokenUtil {
 
         return JSON.parseObject(body.get(AppConstants.JWT_USER_INFO_KEY).toString(), LoginUser.class);
     }
-
-
-
 
 
     /**
@@ -63,7 +70,7 @@ public class AuthorityTokenUtil {
     }
 
 
-    public static final String PUBLIC_KEY="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkbQS2CMRvB3e9l+zbxDq1ds/CW1h7dmpd1aJZJR2/qpC2itreI6AdUVquESx564I+M1UPwDW6qqhhrz7wFiGs2GGr59TkQ0rf2+WsNFWblAQoyC/Dxr5s60oBsMpx8hMwbs2ZU5vHFlkhFuLSc6kDEb2SSpLAx5XtTUZw3ZcSMy4tZFUjUU1YCRxT89idgpyLt2p8XxMF8HKQxClXeF1arAsvDVCFbAhYURyubfPhrFSh80CxfgoyLeqLEdGqZb/kHDsKTPQZ8yVOLX/Dd/xt+7xdE2MRIKhmB6EnjnWERuJ1xDWIwLhOYbVGyBXrGn+3EIMtoYtgkXlbAVjJACi2wIDAQAB";
+    public static final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkbQS2CMRvB3e9l+zbxDq1ds/CW1h7dmpd1aJZJR2/qpC2itreI6AdUVquESx564I+M1UPwDW6qqhhrz7wFiGs2GGr59TkQ0rf2+WsNFWblAQoyC/Dxr5s60oBsMpx8hMwbs2ZU5vHFlkhFuLSc6kDEb2SSpLAx5XtTUZw3ZcSMy4tZFUjUU1YCRxT89idgpyLt2p8XxMF8HKQxClXeF1arAsvDVCFbAhYURyubfPhrFSh80CxfgoyLeqLEdGqZb/kHDsKTPQZ8yVOLX/Dd/xt+7xdE2MRIKhmB6EnjnWERuJ1xDWIwLhOYbVGyBXrGn+3EIMtoYtgkXlbAVjJACi2wIDAQAB";
 
 
     /**
@@ -78,7 +85,6 @@ public class AuthorityTokenUtil {
         return KeyFactory.getInstance("RSA")
                 .generatePublic(keySpec);
     }
-
 
 
 }

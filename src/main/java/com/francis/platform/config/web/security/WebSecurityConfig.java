@@ -1,9 +1,12 @@
 package com.francis.platform.config.web.security;
 
+import com.francis.platform.common.constans.AppProperties;
 import com.francis.platform.config.web.security.filter.CaptchaFilter;
 import com.francis.platform.config.web.security.filter.JwtAuthenticationFilter;
+import com.francis.platform.config.web.security.service.JwtService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,31 +25,33 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig   {
-
-
-
-
+public class WebSecurityConfig {
 
 
     private final UserDetailsService userDetailsService;
     private final UserLoginSuccessHandler userLoginSuccessHandler;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CaptchaFilter captchaFilter;
+    private final JwtService jwtService;
+    private final AppProperties appProperties;
 
 
     private final AuthenticationEntryPoint authenticationEntryPoint;
-    public WebSecurityConfig(UserDetailsService userDetailsService, UserLoginSuccessHandler userLoginSuccessHandler, JwtAuthenticationFilter jwtAuthenticationFilter, CaptchaFilter captchaFilter, AuthenticationEntryPoint authenticationEntryPoint) {
+
+    public WebSecurityConfig(UserDetailsService userDetailsService, UserLoginSuccessHandler userLoginSuccessHandler, CaptchaFilter captchaFilter, JwtService jwtService, AppProperties appProperties, AuthenticationEntryPoint authenticationEntryPoint) {
         this.userDetailsService = userDetailsService;
         this.userLoginSuccessHandler = userLoginSuccessHandler;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.captchaFilter = captchaFilter;
-
+        this.jwtService = jwtService;
+        this.appProperties = appProperties;
         this.authenticationEntryPoint = authenticationEntryPoint;
+
+        this.jwtAuthenticationFilter = new JwtAuthenticationFilter(this.jwtService, this.appProperties, this.authenticationEntryPoint);
+
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -56,18 +61,10 @@ public class WebSecurityConfig   {
     }
 
 
-
-
-
-
-
-
-
-
     @Bean
     public WebSecurityCustomizer ignoringCustomizer() {
         return (web) -> web.ignoring()
-                .antMatchers("/platform");
+                .antMatchers("/v1/captcha/obtain","/v1/siteArea/push" );
     }
 
     @Bean
@@ -77,35 +74,26 @@ public class WebSecurityConfig   {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(captchaFilter ,JwtAuthenticationFilter.class)
+                .addFilterBefore(captchaFilter, JwtAuthenticationFilter.class)
+                .authorizeRequests(authorize -> authorize.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .antMatchers("/login").permitAll()
+                        .antMatchers("/v1/captcha/obtain").permitAll()
+                        .antMatchers("/v1/siteArea/push").permitAll()
+                        .anyRequest()
+                        .authenticated()
+                ).formLogin()
+                .successHandler(userLoginSuccessHandler)
+                .failureHandler(new UnAuthenticationFailureHandler())
+                .and().logout()
+                .addLogoutHandler(new UserLogoutSuccessHandler())
+                .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .accessDeniedHandler(new UnAuthExceptionHandler())
                 .and()
-                .formLogin()
-                 .loginProcessingUrl("/login").successHandler(userLoginSuccessHandler)
-                .failureHandler(new UnAuthenticationFailureHandler())
-                .and().logout().logoutUrl("/logout")
-                .addLogoutHandler(new UserLogoutSuccessHandler())
-                .and()
-                .authorizeRequests()
-                .antMatchers("/platform/login")
-                .permitAll()
-                .antMatchers("/app/test")
-                .permitAll()
-                .antMatchers("/v1/captcha/obtain").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and().userDetailsService(userDetailsService);
+                .userDetailsService(userDetailsService);
         return http.build();
     }
-
-
-
-
-
-
-
 
 
 }

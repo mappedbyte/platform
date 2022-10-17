@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.francis.platform.mapper.MapInformationMapper">
+  <resultMap id="BaseResultMap" type="com.francis.platform.entity.MapInformation">
+    <!--@mbg.generated-->
+    <!--@Table t_map_information-->
+    <id column=" map_information_id" jdbcType="BIGINT" property=" mapInformationId" />
+    <result column="map_picture" jdbcType="VARCHAR" property="mapPicture" />
+    <result column="map_name" jdbcType="VARCHAR" property="mapName" />
+    <result column="floor" jdbcType="VARCHAR" property="floor" />
+    <result column="map_width" jdbcType="VARCHAR" property="mapWidth" />
+    <result column="map_height" jdbcType="VARCHAR" property="mapHeight" />
+    <result column="origin_x" jdbcType="VARCHAR" property="originX" />
+    <result column="origin_y" jdbcType="VARCHAR" property="originY" />
+    <result column="map_width_pixel" jdbcType="VARCHAR" property="mapWidthPixel" />
+    <result column="map_height_pixel" jdbcType="VARCHAR" property="mapHeightPixel" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    
+map_information_id, map_picture, map_name, `floor`, map_width, map_height, origin_x, 
+    origin_y, map_width_pixel, map_height_pixel, is_deleted, create_time, update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update t_map_information
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="map_picture = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.mapPicture,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="map_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.mapName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`floor` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.floor,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="map_width = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.mapWidth,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="map_height = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.mapHeight,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="origin_x = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.originX,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="origin_y = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.originY,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="map_width_pixel = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.mapWidthPixel,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="map_height_pixel = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.mapHeightPixel,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="is_deleted = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.isDeleted,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.updateTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+    </trim>
+    where 
+map_information_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.
+mapInformationId,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update t_map_information
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="map_picture = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.mapPicture != null">
+            when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.mapPicture,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="map_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.mapName != null">
+            when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.mapName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`floor` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.floor != null">
+            when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.floor,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="map_width = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.mapWidth != null">
+            when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.mapWidth,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="map_height = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.mapHeight != null">
+            when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.mapHeight,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="origin_x = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.originX != null">
+            when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.originX,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="origin_y = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.originY != null">
+            when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.originY,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="map_width_pixel = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.mapWidthPixel != null">
+            when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.mapWidthPixel,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="map_height_pixel = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.mapHeightPixel != null">
+            when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.mapHeightPixel,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_deleted = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isDeleted != null">
+            when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.isDeleted,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when 
+map_information_id = #{item.
+mapInformationId,jdbcType=BIGINT} then #{item.updateTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where 
+map_information_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.
+mapInformationId,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated-->
+    insert into t_map_information
+    (
+map_information_id, map_picture, map_name, `floor`, map_width, map_height, origin_x, 
+      origin_y, map_width_pixel, map_height_pixel, is_deleted, create_time, update_time
+      )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.
+mapInformationId,jdbcType=BIGINT}, #{item.mapPicture,jdbcType=VARCHAR}, 
+        #{item.mapName,jdbcType=VARCHAR}, #{item.floor,jdbcType=VARCHAR}, #{item.mapWidth,jdbcType=VARCHAR}, 
+        #{item.mapHeight,jdbcType=VARCHAR}, #{item.originX,jdbcType=VARCHAR}, #{item.originY,jdbcType=VARCHAR}, 
+        #{item.mapWidthPixel,jdbcType=VARCHAR}, #{item.mapHeightPixel,jdbcType=VARCHAR}, 
+        #{item.isDeleted,jdbcType=INTEGER}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="com.francis.platform.entity.MapInformation">
+    <!--@mbg.generated-->
+    insert into t_map_information
+    (
+map_information_id, map_picture, map_name, `floor`, map_width, map_height, origin_x, 
+      origin_y, map_width_pixel, map_height_pixel, is_deleted, create_time, update_time
+      )
+    values
+    (#{
+mapInformationId,jdbcType=BIGINT}, #{mapPicture,jdbcType=VARCHAR}, #{mapName,jdbcType=VARCHAR}, 
+      #{floor,jdbcType=VARCHAR}, #{mapWidth,jdbcType=VARCHAR}, #{mapHeight,jdbcType=VARCHAR}, 
+      #{originX,jdbcType=VARCHAR}, #{originY,jdbcType=VARCHAR}, #{mapWidthPixel,jdbcType=VARCHAR}, 
+      #{mapHeightPixel,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+    on duplicate key update 
+    
+map_information_id = #{
+mapInformationId,jdbcType=BIGINT}, 
+    map_picture = #{mapPicture,jdbcType=VARCHAR}, 
+    map_name = #{mapName,jdbcType=VARCHAR}, 
+    `floor` = #{floor,jdbcType=VARCHAR}, 
+    map_width = #{mapWidth,jdbcType=VARCHAR}, 
+    map_height = #{mapHeight,jdbcType=VARCHAR}, 
+    origin_x = #{originX,jdbcType=VARCHAR}, 
+    origin_y = #{originY,jdbcType=VARCHAR}, 
+    map_width_pixel = #{mapWidthPixel,jdbcType=VARCHAR}, 
+    map_height_pixel = #{mapHeightPixel,jdbcType=VARCHAR}, 
+    is_deleted = #{isDeleted,jdbcType=INTEGER}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    update_time = #{updateTime,jdbcType=TIMESTAMP}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="com.francis.platform.entity.MapInformation">
+    <!--@mbg.generated-->
+    insert into t_map_information
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test=" mapInformationId != null">
+        
+map_information_id,
+      </if>
+      <if test="mapPicture != null">
+        map_picture,
+      </if>
+      <if test="mapName != null">
+        map_name,
+      </if>
+      <if test="floor != null">
+        `floor`,
+      </if>
+      <if test="mapWidth != null">
+        map_width,
+      </if>
+      <if test="mapHeight != null">
+        map_height,
+      </if>
+      <if test="originX != null">
+        origin_x,
+      </if>
+      <if test="originY != null">
+        origin_y,
+      </if>
+      <if test="mapWidthPixel != null">
+        map_width_pixel,
+      </if>
+      <if test="mapHeightPixel != null">
+        map_height_pixel,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test=" mapInformationId != null">
+        #{
+mapInformationId,jdbcType=BIGINT},
+      </if>
+      <if test="mapPicture != null">
+        #{mapPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="mapName != null">
+        #{mapName,jdbcType=VARCHAR},
+      </if>
+      <if test="floor != null">
+        #{floor,jdbcType=VARCHAR},
+      </if>
+      <if test="mapWidth != null">
+        #{mapWidth,jdbcType=VARCHAR},
+      </if>
+      <if test="mapHeight != null">
+        #{mapHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="originX != null">
+        #{originX,jdbcType=VARCHAR},
+      </if>
+      <if test="originY != null">
+        #{originY,jdbcType=VARCHAR},
+      </if>
+      <if test="mapWidthPixel != null">
+        #{mapWidthPixel,jdbcType=VARCHAR},
+      </if>
+      <if test="mapHeightPixel != null">
+        #{mapHeightPixel,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test=" mapInformationId != null">
+        
+map_information_id = #{
+mapInformationId,jdbcType=BIGINT},
+      </if>
+      <if test="mapPicture != null">
+        map_picture = #{mapPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="mapName != null">
+        map_name = #{mapName,jdbcType=VARCHAR},
+      </if>
+      <if test="floor != null">
+        `floor` = #{floor,jdbcType=VARCHAR},
+      </if>
+      <if test="mapWidth != null">
+        map_width = #{mapWidth,jdbcType=VARCHAR},
+      </if>
+      <if test="mapHeight != null">
+        map_height = #{mapHeight,jdbcType=VARCHAR},
+      </if>
+      <if test="originX != null">
+        origin_x = #{originX,jdbcType=VARCHAR},
+      </if>
+      <if test="originY != null">
+        origin_y = #{originY,jdbcType=VARCHAR},
+      </if>
+      <if test="mapWidthPixel != null">
+        map_width_pixel = #{mapWidthPixel,jdbcType=VARCHAR},
+      </if>
+      <if test="mapHeightPixel != null">
+        map_height_pixel = #{mapHeightPixel,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -15,6 +15,11 @@ public class ResponseUtil {
     public static void out(HttpServletResponse response, CommonResponse commonResponse) {
         ObjectMapper mapper = new ObjectMapper();
         response.setStatus(HttpStatus.OK.value());
+        response.setHeader("Access-Control-Allow-Origin","*");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "*");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         try {
             mapper.writeValue(response.getWriter(), commonResponse);

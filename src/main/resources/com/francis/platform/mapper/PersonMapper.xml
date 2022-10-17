@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.francis.platform.mapper.PersonMapper">
+  <resultMap id="BaseResultMap" type="com.francis.platform.entity.Person">
+    <!--@mbg.generated-->
+    <!--@Table t_person-->
+    <id column="person_id" jdbcType="BIGINT" property="personId" />
+    <result column="person_name" jdbcType="VARCHAR" property="personName" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="id_numer" jdbcType="VARCHAR" property="idNumer" />
+    <result column="person_dept_id" jdbcType="BIGINT" property="personDeptId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    person_id, person_name, id_card, id_numer, person_dept_id, `status`, is_deleted, 
+    create_time, update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update t_person
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="person_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when person_id = #{item.personId,jdbcType=BIGINT} then #{item.personName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="id_card = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when person_id = #{item.personId,jdbcType=BIGINT} then #{item.idCard,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="id_numer = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when person_id = #{item.personId,jdbcType=BIGINT} then #{item.idNumer,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="person_dept_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when person_id = #{item.personId,jdbcType=BIGINT} then #{item.personDeptId,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when person_id = #{item.personId,jdbcType=BIGINT} then #{item.status,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="is_deleted = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when person_id = #{item.personId,jdbcType=BIGINT} then #{item.isDeleted,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when person_id = #{item.personId,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when person_id = #{item.personId,jdbcType=BIGINT} then #{item.updateTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+    </trim>
+    where person_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.personId,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update t_person
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="person_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.personName != null">
+            when person_id = #{item.personId,jdbcType=BIGINT} then #{item.personName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="id_card = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.idCard != null">
+            when person_id = #{item.personId,jdbcType=BIGINT} then #{item.idCard,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="id_numer = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.idNumer != null">
+            when person_id = #{item.personId,jdbcType=BIGINT} then #{item.idNumer,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="person_dept_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.personDeptId != null">
+            when person_id = #{item.personId,jdbcType=BIGINT} then #{item.personDeptId,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when person_id = #{item.personId,jdbcType=BIGINT} then #{item.status,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_deleted = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isDeleted != null">
+            when person_id = #{item.personId,jdbcType=BIGINT} then #{item.isDeleted,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when person_id = #{item.personId,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when person_id = #{item.personId,jdbcType=BIGINT} then #{item.updateTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where person_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.personId,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated-->
+    insert into t_person
+    (person_id, person_name, id_card, id_numer, person_dept_id, `status`, is_deleted, 
+      create_time, update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.personId,jdbcType=BIGINT}, #{item.personName,jdbcType=VARCHAR}, #{item.idCard,jdbcType=VARCHAR}, 
+        #{item.idNumer,jdbcType=VARCHAR}, #{item.personDeptId,jdbcType=BIGINT}, #{item.status,jdbcType=INTEGER}, 
+        #{item.isDeleted,jdbcType=INTEGER}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="com.francis.platform.entity.Person">
+    <!--@mbg.generated-->
+    insert into t_person
+    (person_id, person_name, id_card, id_numer, person_dept_id, `status`, is_deleted, 
+      create_time, update_time)
+    values
+    (#{personId,jdbcType=BIGINT}, #{personName,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, 
+      #{idNumer,jdbcType=VARCHAR}, #{personDeptId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{isDeleted,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+    on duplicate key update 
+    person_id = #{personId,jdbcType=BIGINT}, 
+    person_name = #{personName,jdbcType=VARCHAR}, 
+    id_card = #{idCard,jdbcType=VARCHAR}, 
+    id_numer = #{idNumer,jdbcType=VARCHAR}, 
+    person_dept_id = #{personDeptId,jdbcType=BIGINT}, 
+    `status` = #{status,jdbcType=INTEGER}, 
+    is_deleted = #{isDeleted,jdbcType=INTEGER}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    update_time = #{updateTime,jdbcType=TIMESTAMP}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="com.francis.platform.entity.Person">
+    <!--@mbg.generated-->
+    insert into t_person
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="personId != null">
+        person_id,
+      </if>
+      <if test="personName != null">
+        person_name,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="idNumer != null">
+        id_numer,
+      </if>
+      <if test="personDeptId != null">
+        person_dept_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="personId != null">
+        #{personId,jdbcType=BIGINT},
+      </if>
+      <if test="personName != null">
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumer != null">
+        #{idNumer,jdbcType=VARCHAR},
+      </if>
+      <if test="personDeptId != null">
+        #{personDeptId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="personId != null">
+        person_id = #{personId,jdbcType=BIGINT},
+      </if>
+      <if test="personName != null">
+        person_name = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumer != null">
+        id_numer = #{idNumer,jdbcType=VARCHAR},
+      </if>
+      <if test="personDeptId != null">
+        person_dept_id = #{personDeptId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+
+  <select id="findByCondition" resultType="com.francis.platform.entity.vo.PersonVo">
+    SELECT
+            tp.person_id,
+            tp.person_name,
+            tp.id_card,
+            tp.id_numer,
+            tp.person_dept_id,
+            tp.`status`,
+            tp.is_deleted,
+            tp.create_time,
+            tp.update_time,
+            tpd.person_dept_name
+    FROM
+            t_person   tp LEFT JOIN
+                    t_person_dept tpd on tpd.person_dept_id =tp.person_dept_id
+    WHERE
+            tp.is_deleted =0
+
+    <if test="personDeptId != null and personDeptId != ''">
+      AND  tpd.person_dept_id =#{personDeptId,jdbcType=VARCHAR}
+    </if>
+    <if test="personName != null and personName != ''">
+      AND tp.person_name concat('%',#{personName,jdbcType=VARCHAR},'%')
+    </if>
+    order by tp.create_time desc
+
+  </select>
+
+</mapper>

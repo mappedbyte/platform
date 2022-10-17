@@ -13,10 +13,20 @@ public enum CommonCode implements ResultCode {
     USERNAME_AND_PASSWORD_ERROR(false, 401, "用户名或密码不正确！"),
     PERMISSION_DENIED(false, 402, "权限不足！"),
 
+
     LOGIN_ELSE_WHERE(false, 403, "您的账号在其他地方登录！"),
 
     CAPTCHA_ERROR(false, 404,"验证码不正确！" ),
-    CAPTCHA_EXPIRE(false, 405,"验证码过期,请重新获取！" );
+    CAPTCHA_EXPIRE(false, 405,"验证码过期,请重新获取！" ),
+    INSUFFICIENT_ROLE_LEVEL(false, 406, "权限不足,你的角色级别低于操作的角色级别"),
+    THE_ROLE_NAME_ALREADY_EXISTS(false,407 ,"角色名已经存在,请修改后提交！" ),
+    THE_ROLE_HAS_BEEN_ASSOCIATED(false,408 ,"角色已被用户关联,无法删除" ),
+    MENU_ALREADY_EXISTS(false, 409,"菜单已经存在,请修改后提交" ),
+
+    MENU_SUPERIOR_ERROR(false,410 ,"菜单的上级不可以为自身" ),
+
+    MENU_NOT_EXISTS(false, 411,"菜单不存在,请检查提交信息" )
+    ;
 
 
     boolean success;

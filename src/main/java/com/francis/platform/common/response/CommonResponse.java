@@ -40,4 +40,13 @@ public class CommonResponse<T> implements Response, Serializable {
     }
 
 
+
+
+    public static <T> CommonResponse<T> error(String message){
+        CommonResponse<T> commonResponse = new CommonResponse<>();
+        commonResponse.setCode(CommonCode.ERROR.code);
+        commonResponse.setMessage(message);
+        commonResponse.setSuccess(CommonCode.ERROR.success);
+        return commonResponse;
+    }
 }

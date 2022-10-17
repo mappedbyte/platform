@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.francis.platform.mapper.DictDetailMapper">
+  <resultMap id="BaseResultMap" type="com.francis.platform.entity.DictDetail">
+    <!--@mbg.generated-->
+    <!--@Table t_dict_detail-->
+    <id column="detail_id" jdbcType="BIGINT" property="detailId" />
+    <result column="dict_id" jdbcType="BIGINT" property="dictId" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="dict_sort" jdbcType="INTEGER" property="dictSort" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    detail_id, dict_id, `label`, `value`, dict_sort, create_by, update_by, create_time, 
+    update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update t_dict_detail
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="dict_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.dictId,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="`label` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.label,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`value` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.value,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="dict_sort = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.dictSort,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="create_by = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.createBy,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="update_by = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.updateBy,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.updateTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+    </trim>
+    where detail_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.detailId,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update t_dict_detail
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="dict_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.dictId != null">
+            when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.dictId,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`label` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.label != null">
+            when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.label,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`value` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.value != null">
+            when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.value,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="dict_sort = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.dictSort != null">
+            when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.dictSort,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_by = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createBy != null">
+            when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.createBy,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_by = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateBy != null">
+            when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.updateBy,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when detail_id = #{item.detailId,jdbcType=BIGINT} then #{item.updateTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where detail_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.detailId,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="detail_id" keyProperty="detailId" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_dict_detail
+    (dict_id, `label`, `value`, dict_sort, create_by, update_by, create_time, update_time
+      )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.dictId,jdbcType=BIGINT}, #{item.label,jdbcType=VARCHAR}, #{item.value,jdbcType=VARCHAR}, 
+        #{item.dictSort,jdbcType=INTEGER}, #{item.createBy,jdbcType=VARCHAR}, #{item.updateBy,jdbcType=VARCHAR}, 
+        #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="detail_id" keyProperty="detailId" parameterType="com.francis.platform.entity.DictDetail" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_dict_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="detailId != null">
+        detail_id,
+      </if>
+      dict_id,
+      `label`,
+      `value`,
+      dict_sort,
+      create_by,
+      update_by,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="detailId != null">
+        #{detailId,jdbcType=BIGINT},
+      </if>
+      #{dictId,jdbcType=BIGINT},
+      #{label,jdbcType=VARCHAR},
+      #{value,jdbcType=VARCHAR},
+      #{dictSort,jdbcType=INTEGER},
+      #{createBy,jdbcType=VARCHAR},
+      #{updateBy,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="detailId != null">
+        detail_id = #{detailId,jdbcType=BIGINT},
+      </if>
+      dict_id = #{dictId,jdbcType=BIGINT},
+      `label` = #{label,jdbcType=VARCHAR},
+      `value` = #{value,jdbcType=VARCHAR},
+      dict_sort = #{dictSort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="detail_id" keyProperty="detailId" parameterType="com.francis.platform.entity.DictDetail" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_dict_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="detailId != null">
+        detail_id,
+      </if>
+      <if test="dictId != null">
+        dict_id,
+      </if>
+      <if test="label != null">
+        `label`,
+      </if>
+      <if test="value != null">
+        `value`,
+      </if>
+      <if test="dictSort != null">
+        dict_sort,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="detailId != null">
+        #{detailId,jdbcType=BIGINT},
+      </if>
+      <if test="dictId != null">
+        #{dictId,jdbcType=BIGINT},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="dictSort != null">
+        #{dictSort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="detailId != null">
+        detail_id = #{detailId,jdbcType=BIGINT},
+      </if>
+      <if test="dictId != null">
+        dict_id = #{dictId,jdbcType=BIGINT},
+      </if>
+      <if test="label != null">
+        `label` = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        `value` = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="dictSort != null">
+        dict_sort = #{dictSort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

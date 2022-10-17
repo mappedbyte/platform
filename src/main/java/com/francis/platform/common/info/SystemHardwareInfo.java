@@ -1,6 +1,5 @@
 package com.francis.platform.common.info;
 
-import cn.hutool.core.net.Ipv4Util;
 import cn.hutool.core.net.NetUtil;
 import cn.hutool.core.util.NumberUtil;
 import lombok.Data;
@@ -13,7 +12,6 @@ import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
 import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
-import sun.net.util.IPAddressUtil;
 
 import java.io.Serializable;
 import java.util.LinkedList;

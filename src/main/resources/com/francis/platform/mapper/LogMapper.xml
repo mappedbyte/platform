@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.francis.platform.mapper.LogMapper">
+  <resultMap id="BaseResultMap" type="com.francis.platform.entity.Log">
+    <!--@mbg.generated-->
+    <!--@Table t_log-->
+    <id column="log_id" jdbcType="BIGINT" property="logId" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="log_type" jdbcType="VARCHAR" property="logType" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+    <result column="params" jdbcType="LONGVARCHAR" property="params" />
+    <result column="request_ip" jdbcType="VARCHAR" property="requestIp" />
+    <result column="time" jdbcType="BIGINT" property="time" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="browser" jdbcType="VARCHAR" property="browser" />
+    <result column="exception_detail" jdbcType="LONGVARCHAR" property="exceptionDetail" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    log_id, description, log_type, `method`, params, request_ip, `time`, username, address, 
+    browser, exception_detail, create_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update t_log
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when log_id = #{item.logId,jdbcType=BIGINT} then #{item.description,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="log_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when log_id = #{item.logId,jdbcType=BIGINT} then #{item.logType,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`method` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when log_id = #{item.logId,jdbcType=BIGINT} then #{item.method,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="params = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when log_id = #{item.logId,jdbcType=BIGINT} then #{item.params,jdbcType=LONGVARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="request_ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when log_id = #{item.logId,jdbcType=BIGINT} then #{item.requestIp,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`time` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when log_id = #{item.logId,jdbcType=BIGINT} then #{item.time,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="username = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when log_id = #{item.logId,jdbcType=BIGINT} then #{item.username,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when log_id = #{item.logId,jdbcType=BIGINT} then #{item.address,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="browser = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when log_id = #{item.logId,jdbcType=BIGINT} then #{item.browser,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="exception_detail = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when log_id = #{item.logId,jdbcType=BIGINT} then #{item.exceptionDetail,jdbcType=LONGVARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when log_id = #{item.logId,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+    </trim>
+    where log_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.logId,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated-->
+    update t_log
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="description = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.description != null">
+            when log_id = #{item.logId,jdbcType=BIGINT} then #{item.description,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="log_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.logType != null">
+            when log_id = #{item.logId,jdbcType=BIGINT} then #{item.logType,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`method` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.method != null">
+            when log_id = #{item.logId,jdbcType=BIGINT} then #{item.method,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="params = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.params != null">
+            when log_id = #{item.logId,jdbcType=BIGINT} then #{item.params,jdbcType=LONGVARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="request_ip = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.requestIp != null">
+            when log_id = #{item.logId,jdbcType=BIGINT} then #{item.requestIp,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`time` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.time != null">
+            when log_id = #{item.logId,jdbcType=BIGINT} then #{item.time,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="username = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.username != null">
+            when log_id = #{item.logId,jdbcType=BIGINT} then #{item.username,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.address != null">
+            when log_id = #{item.logId,jdbcType=BIGINT} then #{item.address,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="browser = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.browser != null">
+            when log_id = #{item.logId,jdbcType=BIGINT} then #{item.browser,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="exception_detail = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.exceptionDetail != null">
+            when log_id = #{item.logId,jdbcType=BIGINT} then #{item.exceptionDetail,jdbcType=LONGVARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when log_id = #{item.logId,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where log_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.logId,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="log_id" keyProperty="logId" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_log
+    (description, log_type, `method`, params, request_ip, `time`, username, address, 
+      browser, exception_detail, create_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.description,jdbcType=VARCHAR}, #{item.logType,jdbcType=VARCHAR}, #{item.method,jdbcType=VARCHAR}, 
+        #{item.params,jdbcType=LONGVARCHAR}, #{item.requestIp,jdbcType=VARCHAR}, #{item.time,jdbcType=BIGINT}, 
+        #{item.username,jdbcType=VARCHAR}, #{item.address,jdbcType=VARCHAR}, #{item.browser,jdbcType=VARCHAR}, 
+        #{item.exceptionDetail,jdbcType=LONGVARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="log_id" keyProperty="logId" parameterType="com.francis.platform.entity.Log" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        log_id,
+      </if>
+      description,
+      log_type,
+      `method`,
+      params,
+      request_ip,
+      `time`,
+      username,
+      address,
+      browser,
+      exception_detail,
+      create_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        #{logId,jdbcType=BIGINT},
+      </if>
+      #{description,jdbcType=VARCHAR},
+      #{logType,jdbcType=VARCHAR},
+      #{method,jdbcType=VARCHAR},
+      #{params,jdbcType=LONGVARCHAR},
+      #{requestIp,jdbcType=VARCHAR},
+      #{time,jdbcType=BIGINT},
+      #{username,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR},
+      #{browser,jdbcType=VARCHAR},
+      #{exceptionDetail,jdbcType=LONGVARCHAR},
+      #{createTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="logId != null">
+        log_id = #{logId,jdbcType=BIGINT},
+      </if>
+      description = #{description,jdbcType=VARCHAR},
+      log_type = #{logType,jdbcType=VARCHAR},
+      `method` = #{method,jdbcType=VARCHAR},
+      params = #{params,jdbcType=LONGVARCHAR},
+      request_ip = #{requestIp,jdbcType=VARCHAR},
+      `time` = #{time,jdbcType=BIGINT},
+      username = #{username,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
+      exception_detail = #{exceptionDetail,jdbcType=LONGVARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="log_id" keyProperty="logId" parameterType="com.francis.platform.entity.Log" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into t_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        log_id,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="logType != null">
+        log_type,
+      </if>
+      <if test="method != null">
+        `method`,
+      </if>
+      <if test="params != null">
+        params,
+      </if>
+      <if test="requestIp != null">
+        request_ip,
+      </if>
+      <if test="time != null">
+        `time`,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="browser != null">
+        browser,
+      </if>
+      <if test="exceptionDetail != null">
+        exception_detail,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logId != null">
+        #{logId,jdbcType=BIGINT},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="logType != null">
+        #{logType,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null">
+        #{params,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="requestIp != null">
+        #{requestIp,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=BIGINT},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null">
+        #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="exceptionDetail != null">
+        #{exceptionDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="logId != null">
+        log_id = #{logId,jdbcType=BIGINT},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="logType != null">
+        log_type = #{logType,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        `method` = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null">
+        params = #{params,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="requestIp != null">
+        request_ip = #{requestIp,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        `time` = #{time,jdbcType=BIGINT},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null">
+        browser = #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="exceptionDetail != null">
+        exception_detail = #{exceptionDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
